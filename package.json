@@ -1,0 +1,26 @@
+{
+  "name": "lovely-error",
+  "version": "0.0.1",
+  "description": "I'm going to make your messy errors looks beautiful.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup"
+  },
+  "keywords": [
+    "error",
+    "error_handling",
+    "error_messages",
+    "error_handler",
+    "clean_error",
+    "lovely_error",
+    "nice_error"
+  ],
+  "author": "xvyashar",
+  "license": "MIT",
+  "devDependencies": {
+    "tsup": "^8.2.4",
+    "typescript": "^5.6.2"
+  }
+}
