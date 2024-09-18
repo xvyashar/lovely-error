@@ -1,9 +1,3 @@
-export type LoggerFunction = (message: string, ...params: any[]) => void;
-
-export type LovelyLogOptions = {
-  logger?: LoggerFunction | null;
-};
-
 export type LovelyStackOptions = {
   includePackageTrace?: boolean;
   includeProjectTrace?: boolean;
@@ -44,6 +38,25 @@ export type ExtractedTrace = {
 export type LovelyStack = ExtractMessageOutput & ExtractedTrace;
 
 export type CatchCallback = (stack: LovelyStack) => void;
+
+export type LoggerFunction = (message: any, ...params: any[]) => void;
+
+export type ColorObject = { foreground: number; background?: number };
+export type LogColorPalette = {
+  exception: ColorObject;
+  message: ColorObject;
+  treeArrow: ColorObject;
+  packageTrace: ColorObject;
+  projectTrace: ColorObject;
+  nodeTrace: ColorObject;
+};
+
+export type LovelyLogOptions = {
+  logger?: LoggerFunction | null;
+  colorize?: boolean;
+  verbose?: boolean;
+  colorPalette?: LogColorPalette;
+};
 
 // utility types
 export type RequiredOptional<T> = {
