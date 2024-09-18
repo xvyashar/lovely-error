@@ -118,7 +118,7 @@ export class ParserUtils {
       let line = lines[i].substring(lines[i].indexOf('at') + 3); // remove 'at' prefix
 
       // ignore not needed trace
-      if (line.includes('_LovelyError')) {
+      if (line.includes(`_ParserUtils`) || line.includes(`_LovelyError`)) {
         traceLimit++;
         continue;
       } else if (line.includes('node_modules') && !includePackageTrace)
