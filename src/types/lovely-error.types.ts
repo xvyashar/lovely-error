@@ -1,6 +1,6 @@
 export type LoggerFunction = (message: string, ...params: any[]) => void;
 
-export type LovelyErrorOptions = {
+export type LovelyLogOptions = {
   logger?: LoggerFunction | null;
 };
 
@@ -42,6 +42,8 @@ export type ExtractedTrace = {
 };
 
 export type LovelyStack = ExtractMessageOutput & ExtractedTrace;
+
+export type CatchCallback = (stack: LovelyStack) => void;
 
 // utility types
 export type RequiredOptional<T> = {

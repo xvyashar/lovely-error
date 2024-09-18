@@ -1,36 +1,73 @@
 import {
+  CatchCallback,
   ElementMethodSegment,
   ElementPathSegment,
   ExtractedTrace,
-  LovelyErrorOptions,
+  LovelyLogOptions,
   LovelyStack,
   LovelyStackOptions,
   LovelyTreeElement,
   RequiredOptional,
 } from './types';
 
-import {
-  DEFAULT_LOVELY_ERROR_OPTIONS,
-  DEFAULT_LOVELY_ERROR_STACK_OPTIONS,
-} from './constants';
+import { DEFAULT_LOVELY_ERROR_STACK_OPTIONS } from './constants';
 
 export class LovelyError {
+  static NO_EXCEPTION = 'NO_EXCEPTION';
+
+  private _stack: LovelyStack;
+
   constructor(
     private error: Error | null | undefined,
-    private options?: LovelyErrorOptions,
+    private options?: LovelyStackOptions,
   ) {
-    this.options = this.fillOptions(options, DEFAULT_LOVELY_ERROR_OPTIONS);
+    this.options = this.fillOptions(
+      this.options,
+      DEFAULT_LOVELY_ERROR_STACK_OPTIONS,
+    );
+    this._stack = this.parseError();
   }
 
-  stack(options?: LovelyStackOptions): LovelyStack {
-    options = this.fillOptions(options, DEFAULT_LOVELY_ERROR_STACK_OPTIONS);
+  stack() {
+    return this._stack;
+  }
 
+  catch(exception: string, callback: CatchCallback) {
+    try {
+      if (exception === LovelyError.NO_EXCEPTION) exception = 'Error';
+      if (this.error?.name === exception) callback(this._stack);
+    } catch (error) {
+      new LovelyError(error as Error).log();
+    }
+  }
+
+  log(options?: LovelyLogOptions) {}
+
+  // static functions
+  static stack(
+    error: Error | null | undefined,
+    stackOptions?: LovelyStackOptions,
+  ) {
+    return new LovelyError(error, stackOptions).stack();
+  }
+
+  static catch(
+    error: Error | null | undefined,
+    exception: string,
+    callback: CatchCallback,
+    stackOptions?: LovelyStackOptions,
+  ) {
+    return new LovelyError(error, stackOptions).catch(exception, callback);
+  }
+
+  // private utility functions
+  private parseError(): LovelyStack {
     let { error } = this;
 
     // handle null | undefined errors
     if (!error) {
       this.error = new Error('Unknown error occurred!');
-      return this.stack(options);
+      return this.parseError();
     }
 
     const { name: exception, message } = error;
@@ -49,7 +86,7 @@ export class LovelyError {
     const { trace, packageTrace, projectTrace, nodeTrace, stringTrace } =
       this.extractStackTrace(
         rawTrace,
-        options as RequiredOptional<LovelyStackOptions>,
+        this.options as RequiredOptional<LovelyStackOptions>,
       );
 
     return {
@@ -63,16 +100,6 @@ export class LovelyError {
     };
   }
 
-  // static functions
-  static stack(
-    error: Error | null | undefined,
-    options?: LovelyErrorOptions,
-    stackOptions?: LovelyStackOptions,
-  ) {
-    return new LovelyError(error, options).stack(stackOptions);
-  }
-
-  // private utility functions
   private fillOptions<T extends object>(
     optionsInput: T | undefined,
     defaultOptions: RequiredOptional<T>,
