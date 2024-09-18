@@ -1,7 +1,7 @@
 {
   "name": "lovely-error",
   "version": "0.0.1",
-  "description": "I'm going to make your messy errors looks beautiful.",
+  "description": "I'm going to make your scary errors lovely!",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",

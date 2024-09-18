@@ -1,22 +1,15 @@
 export type LoggerFunction = (message: string, ...params: any[]) => void;
 
 export type LovelyErrorOptions = {
-  error?: Error | null;
-  logger?: LoggerFunction;
+  logger?: LoggerFunction | null;
 };
 
 export type LovelyStackOptions = {
   includePackageTrace?: boolean;
-  logNodeTrace?: boolean;
-  colorizeLog?: boolean;
-};
-
-export type LovelyTreeElement = {
-  method: string;
-  class: string;
-  location: string;
-  line: string;
-  column: string;
+  includeProjectTrace?: boolean;
+  includeNodeTrace?: boolean;
+  provideSupplementaryTrace?: boolean;
+  traceLimit?: number;
 };
 
 export type ExtractMessageOutput = {
@@ -24,13 +17,33 @@ export type ExtractMessageOutput = {
   message: string;
 };
 
-export type ExtractTraceOutput = {
-  trace: LovelyTreeElement[];
-  packageTrace: LovelyTreeElement[];
-  projectTrace: LovelyTreeElement[];
+export type ElementMethodSegment = {
+  method: {
+    name: string;
+    alias?: string;
+    parent?: string;
+  };
 };
 
-export type LovelyStack = ExtractMessageOutput &
-  ExtractTraceOutput & {
-    stringTrace?: string;
-  };
+export type ElementPathSegment = {
+  filePath: string;
+  line: string;
+  column: string;
+};
+
+export type LovelyTreeElement = ElementMethodSegment & ElementPathSegment;
+
+export type ExtractedTrace = {
+  trace?: LovelyTreeElement[];
+  packageTrace?: LovelyTreeElement[];
+  projectTrace?: LovelyTreeElement[];
+  nodeTrace?: LovelyTreeElement[];
+  stringTrace?: string;
+};
+
+export type LovelyStack = ExtractMessageOutput & ExtractedTrace;
+
+// utility types
+export type RequiredOptional<T> = {
+  [K in keyof T]-?: T[K] extends undefined ? never : T[K];
+};
