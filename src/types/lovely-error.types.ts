@@ -31,13 +31,13 @@ export type ElementPathSegment = {
   column: string;
 };
 
-export type LovelyTreeElement = ElementMethodSegment & ElementPathSegment;
+export type LovelyTraceElement = ElementMethodSegment & ElementPathSegment;
 
 export type ExtractedTrace = {
-  trace?: LovelyTreeElement[];
-  packageTrace?: LovelyTreeElement[];
-  projectTrace?: LovelyTreeElement[];
-  nodeTrace?: LovelyTreeElement[];
+  trace?: LovelyTraceElement[];
+  packageTrace?: LovelyTraceElement[];
+  projectTrace?: LovelyTraceElement[];
+  nodeTrace?: LovelyTraceElement[];
   stringTrace?: string;
 };
 

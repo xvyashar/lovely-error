@@ -6,7 +6,7 @@ import {
   LovelyLogOptions,
   LovelyStack,
   LovelyStackOptions,
-  LovelyTreeElement,
+  LovelyTraceElement,
   RequiredOptional,
 } from './types';
 
@@ -136,10 +136,10 @@ export class LovelyError {
   ): ExtractedTrace {
     const lines = rawTrace.split('\n');
 
-    const trace: LovelyTreeElement[] = [];
-    const packageTrace: LovelyTreeElement[] = [];
-    const projectTrace: LovelyTreeElement[] = [];
-    const nodeTrace: LovelyTreeElement[] = [];
+    const trace: LovelyTraceElement[] = [];
+    const packageTrace: LovelyTraceElement[] = [];
+    const projectTrace: LovelyTraceElement[] = [];
+    const nodeTrace: LovelyTraceElement[] = [];
     let stringTrace = '';
 
     for (let i = 0; i < lines.length; i++) {
@@ -157,7 +157,7 @@ export class LovelyError {
       else if (line.includes('node:internal') && !includeNodeTrace) continue;
       else if (!includeProjectTrace) continue;
 
-      let treeElement: LovelyTreeElement;
+      let treeElement: LovelyTraceElement;
 
       // parse line
       // line can has be splitted in two segments:
