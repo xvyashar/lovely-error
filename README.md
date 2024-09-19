@@ -1,6 +1,6 @@
 # Lovely Error
 
-Minimal, powerful, and highly customizable <span style='color: #F03'>error</span> parser and manager for JavaScript! 🚀
+Minimal, powerful, and highly customizable error parser and manager for JavaScript! 🚀
 
 > [!WARNING]
 > Not stable yet!
