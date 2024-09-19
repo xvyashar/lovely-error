@@ -6,7 +6,7 @@ export type LovelyStackOptions = {
   traceLimit?: number;
 };
 
-export type ExtractMessageOutput = {
+export type ExtractedMessage = {
   exception: string;
   message: string;
 };
@@ -35,14 +35,24 @@ export type ExtractedTrace = {
   stringTrace?: string;
 };
 
-export type LovelyStack = ExtractMessageOutput & ExtractedTrace;
+export type LovelyStack = ExtractedMessage & ExtractedTrace;
 
 export type CatchCallback = (stack: LovelyStack) => void;
 
 export type LoggerFunction = (message: any, ...params: any[]) => void;
 
 export type ColorObject = { foreground: number; background?: number };
+
 export type LogColorPalette = {
+  exception?: ColorObject;
+  message?: ColorObject;
+  treeArrow?: ColorObject;
+  packageTrace?: ColorObject;
+  projectTrace?: ColorObject;
+  nodeTrace?: ColorObject;
+};
+
+export type FilledLogColorPalette = {
   exception: ColorObject;
   message: ColorObject;
   treeArrow: ColorObject;

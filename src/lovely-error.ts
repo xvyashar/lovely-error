@@ -1,6 +1,7 @@
 import {
   CatchCallback,
   ColorObject,
+  FilledLogColorPalette,
   LovelyLogOptions,
   LovelyStack,
   LovelyStackOptions,
@@ -55,7 +56,9 @@ export class LovelyError {
 
     if (!filledOptions.logger) return;
 
-    const { logger, colorize, verbose, colorPalette } = filledOptions;
+    const { logger, colorize, verbose } = filledOptions;
+    const colorPalette = filledOptions.colorPalette as FilledLogColorPalette;
+
     const { exception, message, trace } = this._stack;
 
     let log = `${
