@@ -1,6 +1,6 @@
 {
   "name": "lovely-error",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Minimal, powerful, and highly customizable <span style='color: #F03'>error</span> parser and manager for JavaScript! 🚀",
   "repository": "xvyashar/lovely-error",
   "exports": {
