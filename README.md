@@ -24,7 +24,13 @@ We are going to add more of them soon!
 
 # How to Use
 
-This package has only three methods that can be accessed by instance or statically.
+## Installation
+
+```console
+npm install lovely-error
+yarn add lovely-error
+pnpm install lovely-error
+```
 
 ## Constructor
 
@@ -55,6 +61,8 @@ type LovelyStackOptions = {
   traceLimit?: number; // default: 10
 };
 ```
+
+This package has only three methods that can be accessed by instance or statically.
 
 ## `LovelyError.stack`
 
