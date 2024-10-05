@@ -1,7 +1,7 @@
 export type LovelyStackOptions = {
   includePackageTrace?: boolean;
   includeProjectTrace?: boolean;
-  includeNodeTrace?: boolean;
+  includeInternalTrace?: boolean;
   provideSupplementaryTrace?: boolean;
   traceLimit?: number;
 };
@@ -31,7 +31,7 @@ export type ExtractedTrace = {
   trace?: LovelyTraceElement[];
   packageTrace?: LovelyTraceElement[];
   projectTrace?: LovelyTraceElement[];
-  nodeTrace?: LovelyTraceElement[];
+  internalTrace?: LovelyTraceElement[];
   stringTrace?: string;
 };
 
@@ -49,7 +49,7 @@ export type LogColorPalette = {
   treeArrow?: ColorObject;
   packageTrace?: ColorObject;
   projectTrace?: ColorObject;
-  nodeTrace?: ColorObject;
+  internalTrace?: ColorObject;
 };
 
 export type FilledLogColorPalette = {
@@ -58,7 +58,7 @@ export type FilledLogColorPalette = {
   treeArrow: ColorObject;
   packageTrace: ColorObject;
   projectTrace: ColorObject;
-  nodeTrace: ColorObject;
+  internalTrace: ColorObject;
 };
 
 export type LovelyLogOptions = {

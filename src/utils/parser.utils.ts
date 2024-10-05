@@ -7,6 +7,7 @@ import {
   LovelyTraceElement,
   RequiredOptional,
 } from '../types';
+import { HandyUtils } from './handy.utils';
 
 export class ParserUtils {
   private static instance: ParserUtils;
@@ -43,7 +44,7 @@ export class ParserUtils {
 
     let rawTrace = this.extractRawTrace(error as RequiredOptional<Error>);
 
-    const { trace, packageTrace, projectTrace, nodeTrace, stringTrace } =
+    const { trace, packageTrace, projectTrace, internalTrace, stringTrace } =
       this.extractStackTrace(rawTrace, options);
 
     return {
@@ -52,7 +53,7 @@ export class ParserUtils {
       trace,
       packageTrace,
       projectTrace,
-      nodeTrace,
+      internalTrace,
       stringTrace,
     };
   }
@@ -98,7 +99,7 @@ export class ParserUtils {
     {
       includePackageTrace,
       includeProjectTrace,
-      includeNodeTrace,
+      includeInternalTrace,
       provideSupplementaryTrace,
       traceLimit,
     }: RequiredOptional<LovelyStackOptions>,
@@ -108,7 +109,7 @@ export class ParserUtils {
     const trace: LovelyTraceElement[] = [];
     const packageTrace: LovelyTraceElement[] = [];
     const projectTrace: LovelyTraceElement[] = [];
-    const nodeTrace: LovelyTraceElement[] = [];
+    const internalTrace: LovelyTraceElement[] = [];
     let stringTrace = '';
 
     for (let i = 0; i < lines.length; i++) {
@@ -121,9 +122,10 @@ export class ParserUtils {
       if (line.includes(`_ParserUtils`) || line.includes(`_LovelyError`)) {
         traceLimit++;
         continue;
-      } else if (line.includes('node_modules') && !includePackageTrace)
+      } else if (HandyUtils.isPackageTrace(line) && !includePackageTrace)
         continue;
-      else if (line.includes('node:internal') && !includeNodeTrace) continue;
+      else if (HandyUtils.isInternalTrace(line) && !includeInternalTrace)
+        continue;
       else if (!includeProjectTrace) continue;
 
       let treeElement: LovelyTraceElement;
@@ -160,10 +162,10 @@ export class ParserUtils {
       trace.push(treeElement);
       stringTrace += `${lines[i]}\n`;
 
-      if (treeElement.filePath.includes('node_modules'))
+      if (HandyUtils.isPackageTrace(treeElement.filePath))
         packageTrace.push(treeElement);
-      else if (treeElement.filePath.includes('node:internal'))
-        nodeTrace.push(treeElement);
+      else if (HandyUtils.isInternalTrace(treeElement.filePath))
+        internalTrace.push(treeElement);
       else projectTrace.push(treeElement);
     }
 
@@ -183,7 +185,7 @@ export class ParserUtils {
         {
           includePackageTrace,
           includeProjectTrace,
-          includeNodeTrace,
+          includeInternalTrace,
           provideSupplementaryTrace,
           traceLimit: traceLimit - lines.length,
         },
@@ -194,8 +196,8 @@ export class ParserUtils {
         packageTrace.push(...supplementTrace.packageTrace);
       if (supplementTrace.projectTrace)
         projectTrace.push(...supplementTrace.projectTrace);
-      if (supplementTrace.nodeTrace)
-        nodeTrace.push(...supplementTrace.nodeTrace);
+      if (supplementTrace.internalTrace)
+        internalTrace.push(...supplementTrace.internalTrace);
       if (supplementTrace.stringTrace)
         stringTrace += `${
           supplementTrace.stringTrace.startsWith(' ') ? '' : '\t'
@@ -208,7 +210,7 @@ export class ParserUtils {
       trace,
       packageTrace: includePackageTrace ? packageTrace : undefined,
       projectTrace: includeProjectTrace ? projectTrace : undefined,
-      nodeTrace: includeNodeTrace ? nodeTrace : undefined,
+      internalTrace: includeInternalTrace ? internalTrace : undefined,
       stringTrace,
     };
   }

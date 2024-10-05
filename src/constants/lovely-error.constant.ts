@@ -26,7 +26,7 @@ export const DEFAULT_LOVELY_LOG_OPTIONS: RequiredOptional<LovelyLogOptions> = {
     projectTrace: {
       foreground: ConsoleColor.TEXT_WHITE,
     },
-    nodeTrace: {
+    internalTrace: {
       foreground: ConsoleColor.TEXT_GRAY,
     },
   },
@@ -36,7 +36,7 @@ export const DEFAULT_LOVELY_ERROR_STACK_OPTIONS: RequiredOptional<LovelyStackOpt
   {
     includePackageTrace: false,
     includeProjectTrace: true,
-    includeNodeTrace: false,
+    includeInternalTrace: false,
     provideSupplementaryTrace: true,
     traceLimit: 10,
   };

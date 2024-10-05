@@ -13,7 +13,7 @@ import {
   DEFAULT_LOVELY_LOG_OPTIONS,
 } from './constants';
 
-import { ColorUtils, ParserUtils } from './utils';
+import { ColorUtils, HandyUtils, ParserUtils } from './utils';
 
 export class LovelyError {
   static NO_EXCEPTION = 'NO_EXCEPTION';
@@ -81,10 +81,10 @@ export class LovelyError {
         }`;
 
         let elementColor: ColorObject;
-        if (filePath.includes('node_modules'))
+        if (HandyUtils.isPackageTrace(filePath))
           elementColor = colorPalette.packageTrace;
-        else if (filePath.includes('node:internal'))
-          elementColor = colorPalette.nodeTrace;
+        else if (HandyUtils.isInternalTrace(filePath))
+          elementColor = colorPalette.internalTrace;
         else elementColor = colorPalette.projectTrace;
 
         log += `${
