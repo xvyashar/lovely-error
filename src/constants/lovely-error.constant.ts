@@ -38,5 +38,6 @@ export const DEFAULT_LOVELY_ERROR_STACK_OPTIONS: RequiredOptional<LovelyStackOpt
     includeProjectTrace: true,
     includeInternalTrace: false,
     provideSupplementaryTrace: true,
+    packagePathSignatures: [],
     traceLimit: 10,
   };

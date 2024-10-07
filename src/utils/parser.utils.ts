@@ -101,6 +101,7 @@ export class ParserUtils {
       includeProjectTrace,
       includeInternalTrace,
       provideSupplementaryTrace,
+      packagePathSignatures,
       traceLimit,
     }: RequiredOptional<LovelyStackOptions>,
   ): ExtractedTrace {
@@ -122,7 +123,10 @@ export class ParserUtils {
       if (line.includes(`_ParserUtils`) || line.includes(`_LovelyError`)) {
         traceLimit++;
         continue;
-      } else if (HandyUtils.isPackageTrace(line) && !includePackageTrace)
+      } else if (
+        HandyUtils.isPackageTrace(line, packagePathSignatures) &&
+        !includePackageTrace
+      )
         continue;
       else if (HandyUtils.isInternalTrace(line) && !includeInternalTrace)
         continue;
@@ -162,7 +166,9 @@ export class ParserUtils {
       trace.push(treeElement);
       stringTrace += `${lines[i]}\n`;
 
-      if (HandyUtils.isPackageTrace(treeElement.filePath))
+      if (
+        HandyUtils.isPackageTrace(treeElement.filePath, packagePathSignatures)
+      )
         packageTrace.push(treeElement);
       else if (HandyUtils.isInternalTrace(treeElement.filePath))
         internalTrace.push(treeElement);
@@ -187,6 +193,7 @@ export class ParserUtils {
           includeProjectTrace,
           includeInternalTrace,
           provideSupplementaryTrace,
+          packagePathSignatures,
           traceLimit: traceLimit - lines.length,
         },
       );

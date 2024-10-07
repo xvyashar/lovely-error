@@ -81,7 +81,12 @@ export class LovelyError {
         }`;
 
         let elementColor: ColorObject;
-        if (HandyUtils.isPackageTrace(filePath))
+        if (
+          HandyUtils.isPackageTrace(
+            filePath,
+            this.options?.packagePathSignatures,
+          )
+        )
           elementColor = colorPalette.packageTrace;
         else if (HandyUtils.isInternalTrace(filePath))
           elementColor = colorPalette.internalTrace;

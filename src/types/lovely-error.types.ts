@@ -3,6 +3,7 @@ export type LovelyStackOptions = {
   includeProjectTrace?: boolean;
   includeInternalTrace?: boolean;
   provideSupplementaryTrace?: boolean;
+  packagePathSignatures?: string[];
   traceLimit?: number;
 };
 

@@ -46,18 +46,20 @@ try {
 
 ### Options
 
-- `includePackageTrace`: Include traces that have been ended up in your `node_modules` folder.
+- `includePackageTrace`: Include traces that have been ended up in your package, or lib folders.
 - `includeProjectTrace`: Include traces that is related to your project source code.
-- `includeNodeTrace`: Include `node:internal` traces.
+- `includeInternalTrace`: Include runtime internal traces.
 - `provideSupplementaryTrace`: Some packages limited their errors trace, and as a result we won't have the error trace in our source code! This feature provides a supplementary trace next to the original trace that points where `LovelyError` instantiated to help you debug better!
+- `packagePathSignatures`: In some environments you may have your packages in custom folders, so you can introduce them to lovely error recognize them as your lib folders.
 - `traceLimit`: Will limit traces that would be **parsed (not those that would be provided).**
 
 ```typescript
 type LovelyStackOptions = {
   includePackageTrace?: boolean; // default: false
   includeProjectTrace?: boolean; // default: true
-  includeNodeTrace?: boolean; // default: false
+  includeInternalTrace?: boolean; // default: false
   provideSupplementaryTrace?: boolean; // default: true
+  packagePathSignatures?: string[]; // default: []
   traceLimit?: number; // default: 10
 };
 ```
@@ -99,7 +101,7 @@ type LovelyStack = {
   trace?: LovelyTraceElement[];
   packageTrace?: LovelyTraceElement[];
   projectTrace?: LovelyTraceElement[];
-  nodeTrace?: LovelyTraceElement[];
+  internalTrace?: LovelyTraceElement[];
   stringTrace?: string;
 };
 ```
@@ -145,7 +147,7 @@ app.get('/', function rootHandler(req, res) {
     throw new ConnectionException('Failed to connect to target server!');
   } catch (error) {
     new LovelyError(error, {
-      includeNodeTrace: true,
+      includeInternalTrace: true,
       includePackageTrace: true,
     }).log();
 
@@ -187,7 +189,7 @@ export type LogColorPalette = {
   treeArrow?: ColorObject;
   packageTrace?: ColorObject;
   projectTrace?: ColorObject;
-  nodeTrace?: ColorObject;
+  internalTrace?: ColorObject;
 };
 ```
 
@@ -211,7 +213,7 @@ Default Object:
   projectTrace: {
       foreground: ConsoleColor.TEXT_WHITE,
   },
-  nodeTrace: {
+  internalTrace: {
       foreground: ConsoleColor.TEXT_GRAY,
   },
 },
@@ -289,7 +291,7 @@ app.get('/', function rootHandler(req, res) {
     throw new ConnectionException('Failed to connect to target server!');
   } catch (error) {
     const lovelyError = new LovelyError(error, {
-      includeNodeTrace: true,
+      includeInternalTrace: true,
       includePackageTrace: true,
     });
 
