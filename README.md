@@ -11,16 +11,12 @@ Minimal, powerful, and highly customizable error parser and manager for JavaScri
 - **Exception Filter:** This feature inspired by Java to handle different exceptions separately.
 - **Logger:** Hmm! Not actually a logger, but it will pass the final neat string to your preferred logger.
 
-# Compatibility
+# Engines Compatibility
 
-We are going to add more of them soon!
-
-- [x] NodeJS
-- [ ] Deno
-- [ ] Bun
-- [ ] Chrome
-- [ ] FireFox
-- [ ] IE
+- [x] V8 (NodeJS, Deno, Chromium, ...)
+- [x] Chakra (Edge)
+- [ ] JavaScriptCore (Bun, Safari)
+- [ ] SpiderMonkey (Firefox)
 
 # How to Use
 
@@ -28,8 +24,12 @@ We are going to add more of them soon!
 
 ```console
 npm install lovely-error
+```
+```console
 yarn add lovely-error
-pnpm install lovely-error
+```
+```console
+pnpm add lovely-error
 ```
 
 ## Constructor
